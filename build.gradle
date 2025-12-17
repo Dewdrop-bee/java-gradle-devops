@@ -1,0 +1,46 @@
+// Apply the application plugin
+plugins {
+    id 'application'
+}
+
+// Project group and version
+group = 'com.example'
+version = '1.0.0'
+
+// Java toolchain configuration
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21) // Match installed Java version
+    }
+}
+
+// Repositories for dependencies
+repositories {
+    mavenCentral()
+}
+
+// Dependencies
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+// Application main class
+application {
+    mainClass = 'com.example.app.App'
+}
+
+// Test task configuration
+tasks.test {
+    useJUnitPlatform() // Required for JUnit 5
+    testLogging {
+        events "passed", "skipped", "failed" // Show test results in console
+    }
+}
+
+// Optional: enable strict compile options for better DevOps practices
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << "-Xlint:all" << "-Werror"
+}
+
